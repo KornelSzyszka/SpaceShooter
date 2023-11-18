@@ -1,4 +1,5 @@
 import pygame
+<<<<<<< HEAD
 import sys
 
 pygame.init()
@@ -51,3 +52,23 @@ def main():
 
 if __name__ == '__main__':
     main()
+=======
+
+# pygame setup
+pygame.init()
+screen = pygame.display.set_mode((1280, 720))
+clock = pygame.time.Clock()
+running = True
+
+while running:
+    # pygame.QUIT event means the user clicked X to close your window
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    pygame.display.flip()
+
+    clock.tick(60)  # limits FPS to 60
+
+pygame.quit()
+>>>>>>> e973ca1 (added main file)
