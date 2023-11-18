@@ -9,8 +9,8 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("Space Shooter")
 
-background_image = pygame.image.load("GFX/background.png")
-spaceship_image = pygame.image.load("GFX/spaceship.png")
+background = pygame.image.load("GFX/background.png")
+spaceship = pygame.image.load("GFX/spaceship.png")
 
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 50, 40
 SPACE_SHIP_SPEED = 5
@@ -24,7 +24,7 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.blit(background_image, (0, 0))
+        screen.blit(background, (0, 0))
 
         spaceship_pos_x, spaceship_pos_y = (WIDTH - SPACESHIP_WIDTH) // 2, (HEIGHT - SPACESHIP_HEIGHT) // 2
         keys = pygame.key.get_pressed()
@@ -38,7 +38,7 @@ def main():
             spaceship_pos_y += SPACE_SHIP_SPEED
 
         spaceship_rect_surface = pygame.Surface((SPACESHIP_WIDTH, SPACESHIP_HEIGHT), pygame.SRCALPHA)
-        spaceship_rect_surface.blit(spaceship_image, (0, 0))
+        spaceship_rect_surface.blit(spaceship, (0, 0))
         screen.blit(spaceship_rect_surface, (spaceship_pos_x, spaceship_pos_y))
 
         pygame.display.flip()
