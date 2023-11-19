@@ -12,27 +12,42 @@ clock = pygame.time.Clock()
 
 pygame.display.set_caption("Space Shooter")
 
-background = pygame.image.load("GFX/background.png")
-spaceship = pygame.image.load("GFX/spaceship.png")
-asteroid_img = pygame.image.load("GFX/asteroid.png")
+background_image = pygame.image.load("GFX/background.png")
+spaceship_image = pygame.image.load("GFX/spaceship.png")
+asteroid_image = pygame.image.load("GFX/asteroid.png")
 
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 50, 40
+SPACE_SHIP_SPEED = 5
 
-asteroid_img = pygame.transform.scale(asteroid_img, (ast.WIDTH, ast.HEIGHT))
-
+asteroid_image = pygame.transform.scale(asteroid_image, (ast.WIDTH, ast.HEIGHT))
 asteroids = []
 
 
 def main():
     running = True
+    spaceship_pos_x, spaceship_pos_y = (WIDTH - SPACESHIP_WIDTH) // 2, (HEIGHT - SPACESHIP_HEIGHT) // 2
 
+    # Main loop
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.blit(background, (0, 0))
-        screen.blit(spaceship, (WIDTH / 2 - SPACESHIP_HEIGHT / 2, HEIGHT / 2 - SPACESHIP_WIDTH / 2))
+        screen.blit(background_image, (0, 0))
+        # Spaceship movement
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT] and spaceship_pos_x > 0:
+            spaceship_pos_x -= SPACE_SHIP_SPEED
+        if keys[pygame.K_RIGHT] and spaceship_pos_x < WIDTH - SPACESHIP_WIDTH:
+            spaceship_pos_x += SPACE_SHIP_SPEED
+        if keys[pygame.K_UP] and spaceship_pos_y > 0:
+            spaceship_pos_y -= SPACE_SHIP_SPEED
+        if keys[pygame.K_DOWN] and spaceship_pos_y < HEIGHT - SPACESHIP_HEIGHT:
+            spaceship_pos_y += SPACE_SHIP_SPEED
+
+        spaceship_rect_surface = pygame.Surface((SPACESHIP_WIDTH, SPACESHIP_HEIGHT), pygame.SRCALPHA)
+        spaceship_rect_surface.blit(spaceship_image, (0, 0))
+        screen.blit(spaceship_rect_surface, (spaceship_pos_x, spaceship_pos_y))
 
         # Asteroid drawing and position update
         for asteroid in asteroids:
@@ -41,7 +56,7 @@ def main():
 
         # Generating asteroids
         if random.randint(0, 100) < 3:  # generation chance
-            new_asteroid = ast.Asteroid(asteroid_img)
+            new_asteroid = ast.Asteroid(asteroid_image)
             asteroids.append(new_asteroid)
 
         pygame.display.flip()

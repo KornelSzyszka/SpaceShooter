@@ -14,7 +14,7 @@ class Asteroid:
         self.rect.y = random.randint(-100, -40)
         self.speed_y = random.randint(1, 5)
 
-    def update(self, asteroids):
+    def update(self, asteroids: list):
         self.rect.y += self.speed_y
         if self.rect.y > SCREEN_HEIGHT:
             asteroids.remove(self)
