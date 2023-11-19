@@ -48,11 +48,19 @@ def main():
         spaceship_rect_surface = pygame.Surface((SPACESHIP_WIDTH, SPACESHIP_HEIGHT), pygame.SRCALPHA)
         spaceship_rect_surface.blit(spaceship_image, (0, 0))
         screen.blit(spaceship_rect_surface, (spaceship_pos_x, spaceship_pos_y))
+        spaceship_to_rect = spaceship_rect_surface.get_rect()
 
         # Asteroid drawing and position update
         for asteroid in asteroids:
             asteroid.update(asteroids)
             screen.blit(asteroid.image, asteroid.rect)
+
+        # Collision with asteroids
+        for asteroid in asteroids:
+            asteroid.check_collision(spaceship_to_rect)
+            if asteroid.check_collision(spaceship_to_rect):
+                spaceship_pos_x, spaceship_pos_y = (WIDTH - SPACESHIP_WIDTH) // 2, (HEIGHT - SPACESHIP_HEIGHT) // 2
+                break
 
         # Generating asteroids
         if random.randint(0, 100) < 3:  # generation chance

@@ -18,3 +18,6 @@ class Asteroid:
         self.rect.y += self.speed_y
         if self.rect.y > SCREEN_HEIGHT:
             asteroids.remove(self)
+
+    def check_collision(self, spaceship_rect):
+        return self.rect.colliderect(spaceship_rect)
